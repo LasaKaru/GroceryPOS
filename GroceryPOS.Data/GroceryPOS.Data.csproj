@@ -10,4 +10,14 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="Backup\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GroceryPOS.Core\GroceryPOS.Core.csproj" />
+    <ProjectReference Include="..\GroceryPOS.Utilities\GroceryPOS.Utilities.csproj" />
+  </ItemGroup>
+
 </Project>
