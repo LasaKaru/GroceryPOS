@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using GroceryPOS.Core.Models;
 
-namespace GroceryPOS.Data.Configuration
+namespace GroceryPOS.Core.Configuration
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {

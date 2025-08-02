@@ -17,7 +17,19 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GroceryPOS.Core\GroceryPOS.Core.csproj" />
+    <ProjectReference Include="..\GroceryPOS.Data\GroceryPOS.Data.csproj" />
     <ProjectReference Include="..\GroceryPOS.Utilities\GroceryPOS.Utilities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="Controls\" />
+    <Folder Include="Resources\Images\" />
+    <Folder Include="Resources\Styles\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Services\" />
+    <Folder Include="ViewModels\InitialSetup\" />
+    <Folder Include="Views\InitialSetup\" />
   </ItemGroup>
 
 </Project>

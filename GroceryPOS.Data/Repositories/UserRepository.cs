@@ -1,14 +1,13 @@
-﻿using GroceryPOS.Core.Interfaces.Repositories;
-using GroceryPOS.Core.Models;
-using GroceryPOS.Data.Context;
-using GroceryPOS.Data.Repositories.Base;
-using GroceryPOS.Utilities.Logging;
+﻿
 using Microsoft.EntityFrameworkCore;
+using GroceryPOS.Core.Interfaces.Repositories; // For IUserRepository
+using GroceryPOS.Core.Models; // For User model
+using GroceryPOS.Core.Context; // For AppDbContext (now in Core!)
+using GroceryPOS.Data.Repositories.Base; // For RepositoryBase
+using GroceryPOS.Utilities.Logging; // For AppLogger
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Linq; // For .AsNoTracking() and .FirstOrDefaultAsync()
 
 namespace GroceryPOS.Data.Repositories
 {

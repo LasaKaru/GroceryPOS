@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace GroceryPOS.Data.Migrations
+namespace GroceryPOS.Core.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration

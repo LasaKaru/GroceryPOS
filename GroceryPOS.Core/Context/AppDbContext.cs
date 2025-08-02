@@ -1,5 +1,5 @@
 ﻿using GroceryPOS.Core.Models; // For User and EntityBase
-using GroceryPOS.Data.Configuration;
+using GroceryPOS.Core.Configuration;
 using GroceryPOS.Utilities.Logging; // For logging database errors
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GroceryPOS.Data.Context
+namespace GroceryPOS.Core.Context
 {
     //public class AppDbContext : DbContext
     //{
@@ -144,19 +144,51 @@ namespace GroceryPOS.Data.Context
         // public DbSet<Customer> Customers { get; set; }
         // etc.
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    // Only configure with the path if it's set. This prevents the design-time factory
+        //    // from overwriting the options it already provided.
+        //    if (!string.IsNullOrEmpty(_databasePath))
+        //    {
+        //        var dbDirectory = Path.GetDirectoryName(_databasePath);
+        //        if (dbDirectory != null && !Directory.Exists(dbDirectory))
+        //        {
+        //            Directory.CreateDirectory(dbDirectory);
+        //            AppLogger.LogInfo($"Database directory created: {dbDirectory}");
+        //        }
+        //        optionsBuilder.UseSqlite($"Data Source={_databasePath}");
+        //    }
+        //    base.OnConfiguring(optionsBuilder);
+        //}
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // Only configure with the path if it's set. This prevents the design-time factory
-            // from overwriting the options it already provided.
             if (!string.IsNullOrEmpty(_databasePath))
             {
                 var dbDirectory = Path.GetDirectoryName(_databasePath);
                 if (dbDirectory != null && !Directory.Exists(dbDirectory))
                 {
-                    Directory.CreateDirectory(dbDirectory);
-                    AppLogger.LogInfo($"Database directory created: {dbDirectory}");
+                    try
+                    {
+                        Directory.CreateDirectory(dbDirectory);
+                        AppLogger.LogInfo($"Database directory created: {dbDirectory}"); // UNCOMMENTED
+                    }
+                    catch (Exception ex)
+                    {
+                        AppLogger.LogError($"Failed to create database directory: {dbDirectory}.", ex); // UNCOMMENTED
+                        throw;
+                    }
                 }
-                optionsBuilder.UseSqlite($"Data Source={_databasePath}");
+
+                try
+                {
+                    optionsBuilder.UseSqlite($"Data Source={_databasePath}");
+                }
+                catch (Exception ex)
+                {
+                    AppLogger.LogError($"Failed to configure SQLite with path '{_databasePath}'.", ex); // UNCOMMENTED
+                    throw;
+                }
             }
             base.OnConfiguring(optionsBuilder);
         }

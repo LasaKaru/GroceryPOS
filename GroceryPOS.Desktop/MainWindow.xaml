@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GroceryPOS.Desktop"
+        xmlns:viewmodels="clr-namespace:GroceryPOS.Desktop.ViewModels"
+        xmlns:authViews="clr-namespace:GroceryPOS.Desktop.Views.Authentication"
+        
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="GroceryPOS" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
     <Grid>
-
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </Window>

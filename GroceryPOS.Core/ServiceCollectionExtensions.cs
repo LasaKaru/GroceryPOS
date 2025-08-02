@@ -1,16 +1,25 @@
-﻿using GroceryPOS.Core.Interfaces.Repositories;
-using GroceryPOS.Core.Interfaces.Services;
-using GroceryPOS.Core.Services;
+﻿//using GroceryPOS.Core.Interfaces.Repositories;
+//using GroceryPOS.Core.Interfaces.Services;
+//using GroceryPOS.Core.Services;
+//using Microsoft.Extensions.DependencyInjection;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using GroceryPOS.Data.Context; // For AppDbContext
+//using GroceryPOS.Data.Repositories; // For UserRepository
+//using GroceryPOS.Data.Repositories.Base; // For RepositoryBase
+//using System;
 using Microsoft.Extensions.DependencyInjection;
+using GroceryPOS.Core.Interfaces.Repositories; // For IUserRepository
+using GroceryPOS.Core.Interfaces.Services; // For IAuthService
+using GroceryPOS.Core.Services; // For AuthService
+using GroceryPOS.Core.Context; // For AppDbContext
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GroceryPOS.Data.Context; // For AppDbContext
-using GroceryPOS.Data.Repositories; // For UserRepository
-using GroceryPOS.Data.Repositories.Base; // For RepositoryBase
-using System;
+using Microsoft.EntityFrameworkCore;
+//using GroceryPOS.Data.Repositories;
+//using GroceryPOS.Core.Repositories.Base;
 
 namespace GroceryPOS.Core
 {
@@ -36,8 +45,8 @@ namespace GroceryPOS.Core
 
             // Register Repositories
             // Using Scoped lifetime ensures a single instance per request/scope
-            services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>)); // Generic repository
-            services.AddScoped<IUserRepository, UserRepository>(); // Specific user repository
+            //services.AddScoped(typeof(IRepository<>), typeof(RepositoryBase<>)); // Generic repository
+            //services.AddScoped<IUserRepository, UserRepository>(); // Specific user repository
 
             // Register Services
             // Using Scoped lifetime for services as well
