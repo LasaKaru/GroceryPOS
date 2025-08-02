@@ -16,6 +16,7 @@ using GroceryPOS.Data.Repositories; // For UserRepository
 using GroceryPOS.Data.Repositories.Base; // For RepositoryBase
 using GroceryPOS.Desktop.ViewModels; // For MainWindowViewModel
 using GroceryPOS.Desktop.ViewModels.Authentication; // For LoginViewModel
+using GroceryPOS.Desktop.ViewModels.InitialSetup;
 using GroceryPOS.Desktop.Views.Authentication; // For LoginView
 using GroceryPOS.Utilities.Logging; // For AppLogger
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using System.IO;
 using System.Windows;
+using GroceryPOS.Desktop.Views.InitialSetup;
 
 namespace GroceryPOS.Desktop
 {
@@ -67,12 +69,17 @@ namespace GroceryPOS.Desktop
                     // to pass the OnLoginSuccess callback, so it doesn't strictly need to be registered
                     // here if only instantiated manually. However, registering it is good practice
                     // if other parts of the app might resolve it directly via IServiceProvider.
-                    services.AddTransient<LoginViewModel>();
-                    services.AddTransient<LoginView>();
+                    //services.AddTransient<LoginViewModel>();
+                    //services.AddTransient<LoginView>();
 
                     // Initial setup view/viewmodel placeholders
                     // services.AddTransient<InitialSetupViewModel>();
                     // services.AddTransient<InitialSetupView>();
+                    services.AddTransient<InitialSetupViewModel>();
+                    services.AddTransient<Views.InitialSetup.InitialSetupView>();
+
+                    services.AddTransient<MainDashboardViewModel>(); // MainDashboardViewModel could be singleton or transient depending on app scope, but transient is safer for now.
+                    services.AddTransient<Views.MainDashboardView>(); // MainDashboardView
                 })
                 .Build();
         }

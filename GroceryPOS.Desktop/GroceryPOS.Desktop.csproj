@@ -25,11 +25,8 @@
     <Folder Include="Models\" />
     <Folder Include="Controls\" />
     <Folder Include="Resources\Images\" />
-    <Folder Include="Resources\Styles\" />
     <Folder Include="Utilities\" />
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\InitialSetup\" />
-    <Folder Include="Views\InitialSetup\" />
   </ItemGroup>
 
 </Project>

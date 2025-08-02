@@ -2,6 +2,7 @@
 using GroceryPOS.Core.Interfaces.Services;
 using GroceryPOS.Desktop.ViewModels.Authentication;
 using GroceryPOS.Desktop.ViewModels.Base;
+using GroceryPOS.Desktop.ViewModels.InitialSetup;
 using GroceryPOS.Desktop.Views.Authentication;
 using GroceryPOS.Utilities.Logging;
 using Microsoft.Extensions.DependencyInjection;
@@ -68,43 +69,87 @@ namespace GroceryPOS.Desktop.ViewModels
             }
         }
 
+        //private void NavigateToLogin()
+        //{
+        //    // Resolve LoginView and LoginViewModel from DI container
+        //    // Pass a callback action to the LoginViewModel for when login is successful
+        //    var loginViewModel = _serviceProvider.GetRequiredService<LoginViewModel>();
+        //    loginViewModel = new LoginViewModel(_authService, OnLoginSuccess); // Re-instantiate to provide callback
+
+        //    var loginView = new LoginView { DataContext = loginViewModel };
+        //    CurrentView = loginView;
+        //    AppLogger.LogInfo("Navigated to LoginView.");
+        //}
+
         private void NavigateToLogin()
         {
-            // Resolve LoginView and LoginViewModel from DI container
-            // Pass a callback action to the LoginViewModel for when login is successful
-            var loginViewModel = _serviceProvider.GetRequiredService<LoginViewModel>();
-            loginViewModel = new LoginViewModel(_authService, OnLoginSuccess); // Re-instantiate to provide callback
-
-            var loginView = new LoginView { DataContext = loginViewModel };
+            // Resolve LoginViewModel and inject IAuthService, passing the callback
+            // We create a new instance each time to ensure clean state and fresh callback
+            var loginViewModel = new LoginViewModel(_authService, OnLoginSuccess); // Manual instantiation
+            var loginView = new Views.Authentication.LoginView { DataContext = loginViewModel };
             CurrentView = loginView;
             AppLogger.LogInfo("Navigated to LoginView.");
         }
 
+        //private void NavigateToInitialSetup()
+        //{
+        //    // For now, let's just show a simple message or a placeholder view
+        //    // We will create the actual InitialSetup views in the next steps
+        //    var initialSetupView = new UserControl(); // Placeholder
+        //    initialSetupView.Content = "Welcome! No admin user found. Please complete initial setup.";
+        //    CurrentView = initialSetupView;
+        //    AppLogger.LogInfo("Navigated to Initial Setup Placeholder.");
+        //    // TODO: In next steps, replace this with actual InitialSetupView and ViewModel
+        //    // var initialSetupViewModel = _serviceProvider.GetRequiredService<InitialSetupViewModel>();
+        //    // initialSetupViewModel = new InitialSetupViewModel(_authService, OnSetupComplete); // Provide callback
+        //    // var initialSetupView = new InitialSetupView { DataContext = initialSetupViewModel };
+        //    // CurrentView = initialSetupView;
+        //}
+
         private void NavigateToInitialSetup()
         {
-            // For now, let's just show a simple message or a placeholder view
-            // We will create the actual InitialSetup views in the next steps
-            var initialSetupView = new UserControl(); // Placeholder
-            initialSetupView.Content = "Welcome! No admin user found. Please complete initial setup.";
+            // Resolve InitialSetupViewModel and inject IAuthService, passing the callback
+            var initialSetupViewModel = new InitialSetupViewModel(_authService, OnSetupComplete);
+            var initialSetupView = new Views.InitialSetup.InitialSetupView { DataContext = initialSetupViewModel }; // Use the actual view
             CurrentView = initialSetupView;
-            AppLogger.LogInfo("Navigated to Initial Setup Placeholder.");
-            // TODO: In next steps, replace this with actual InitialSetupView and ViewModel
-            // var initialSetupViewModel = _serviceProvider.GetRequiredService<InitialSetupViewModel>();
-            // initialSetupViewModel = new InitialSetupViewModel(_authService, OnSetupComplete); // Provide callback
-            // var initialSetupView = new InitialSetupView { DataContext = initialSetupViewModel };
-            // CurrentView = initialSetupView;
+            AppLogger.LogInfo("Navigated to InitialSetupView.");
         }
+
+        // Add this new callback method for when initial setup is done
+        private void OnSetupComplete()
+        {
+            AppLogger.LogInfo("Initial setup completed. Navigating to Login.");
+            NavigateToLogin();
+        }
+
+        //private void OnLoginSuccess(UserRole userRole)
+        //{
+        //    AppLogger.LogInfo($"Login success callback received. User Role: {userRole}");
+        //    // Here, based on userRole, you would navigate to the main dashboard or specific screens.
+        //    // For now, let's just show a success message or a placeholder.
+        //    var dashboardView = new UserControl(); // Placeholder for Dashboard
+        //    dashboardView.Content = $"Login successful! Welcome, you are a {userRole}.";
+        //    CurrentView = dashboardView;
+        //    AppLogger.LogInfo("Navigated to Dashboard Placeholder.");
+        //    // TODO: In later steps, replace with actual DashboardView and ViewModel
+        //}
 
         private void OnLoginSuccess(UserRole userRole)
         {
             AppLogger.LogInfo($"Login success callback received. User Role: {userRole}");
-            // Here, based on userRole, you would navigate to the main dashboard or specific screens.
-            // For now, let's just show a success message or a placeholder.
-            var dashboardView = new UserControl(); // Placeholder for Dashboard
-            dashboardView.Content = $"Login successful! Welcome, you are a {userRole}.";
-            CurrentView = dashboardView;
-            AppLogger.LogInfo("Navigated to Dashboard Placeholder.");
-            // TODO: In later steps, replace with actual DashboardView and ViewModel
+
+            // Create MainDashboardViewModel and pass the user's role and a logout callback
+            var mainDashboardViewModel = new MainDashboardViewModel(userRole, OnLogout);
+            var mainDashboardView = new Views.MainDashboardView { DataContext = mainDashboardViewModel }; // Use the actual view
+            CurrentView = mainDashboardView;
+            AppLogger.LogInfo("Navigated to MainDashboardView.");
+        }
+
+        // Add this new callback method for handling logout
+        private void OnLogout()
+        {
+            AppLogger.LogInfo("Logout initiated. Navigating back to Login.");
+            NavigateToLogin();
         }
 
         // Other navigation methods (e.g., NavigateToDashboard, NavigateToSettings) would go here

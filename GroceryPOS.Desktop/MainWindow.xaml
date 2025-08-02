@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GroceryPOS.Desktop"
         xmlns:viewmodels="clr-namespace:GroceryPOS.Desktop.ViewModels"
         xmlns:authViews="clr-namespace:GroceryPOS.Desktop.Views.Authentication"
-        
+        xmlns:initialSetupViews="clr-namespace:GroceryPOS.Desktop.Views.InitialSetup"
         d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="GroceryPOS" Height="768" Width="1024" WindowStartupLocation="CenterScreen">
